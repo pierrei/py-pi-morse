@@ -1,10 +1,12 @@
+import sys
 from time import sleep
 
 from morse import Morse
 
 
 def callback(char):
-    print char
+    sys.stdout.write(char)
+    sys.stdout.flush()
 
 
 PIN = 3

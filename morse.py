@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from tone_sound import ToneSound
 from decode_tree import DecodeTree
 from RPi import GPIO
 import time
@@ -14,9 +13,8 @@ class Morse(object):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-        self.tone_obj = ToneSound(frequency = 800, volume = .5)
         self.tree = DecodeTree()
-        
+
         self.cpm_update(30)
         self.last_value = False
         self.lines = []
@@ -60,14 +58,12 @@ class Morse(object):
             # key is down
             if not self.last_value:
                 # key just went down
-                self.tone_obj.play(-1) #the -1 means to loop the sound
                 self.key_down_time = time.time()
 
         if not value:
             # key is up
             if self.last_value:
                 # key just went up
-                self.tone_obj.stop()
                 self.key_up_time = time.time()
                 key_down_length = self.key_up_time - self.key_down_time
                 self.decode_was_down(key_down_length)

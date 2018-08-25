@@ -6,11 +6,11 @@ from morse import Morse
 
 class StringMatcher(object):
     string = ''
-    max_length = 5
 
     def __init__(self, string_to_match, matching_callback):
         self.string_to_match = string_to_match
         self.matching_callback = matching_callback
+        self.max_length = len(string_to_match)
 
     def new_char(self, char):
         self.string += char

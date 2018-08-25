@@ -1,7 +1,14 @@
+from time import sleep
+
 from morse import Morse
 
+
 def callback(char):
-  print char
+    print char
+
 
 PIN = 3
-Morse(PIN, callback).read_input()
+morse = Morse(PIN, callback)
+while True:
+    morse.read_input()
+    sleep(0.01)

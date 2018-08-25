@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from decode_tree import DecodeTree
-from RPi import GPIO
 import time
+
+from RPi import GPIO
+
+from decode_tree import DecodeTree
 
 
 class Morse(object):
@@ -71,5 +73,3 @@ class Morse(object):
             self.decode_is_up(key_up_length)
 
         self.last_value = value
-        time.sleep(10)
-        self.read_input()

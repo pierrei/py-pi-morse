@@ -8,12 +8,17 @@ from decode_tree import DecodeTree
 
 
 class Morse(object):
-    def __init__(self, pin, text_callback):
+    def __init__(self, pin, text_callback=lambda: None, pressed_callback=lambda: None, released_callback=lambda: None):
         self.text_callback = text_callback
+        self.pressed_callback = pressed_callback
+        self.released_callback = released_callback
         self.pin = pin
 
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        if pin > 5:
+            GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        else:
+            GPIO.setup(self.pin, GPIO.IN)
 
         self.tree = DecodeTree()
 
@@ -61,11 +66,13 @@ class Morse(object):
             if not self.last_value:
                 # key just went down
                 self.key_down_time = time.time()
+                self.pressed_callback()
 
         if not value:
             # key is up
             if self.last_value:
                 # key just went up
+                self.released_callback()
                 self.key_up_time = time.time()
                 key_down_length = self.key_up_time - self.key_down_time
                 self.decode_was_down(key_down_length)

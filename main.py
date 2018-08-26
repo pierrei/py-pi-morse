@@ -1,7 +1,7 @@
-import sys
 from time import sleep
 
 from morse import Morse
+from diode import Diode
 
 
 class StringMatcher(object):
@@ -21,15 +21,15 @@ class StringMatcher(object):
             self.matching_callback()
 
 
-def match():
-    print "Match!"
+READ_PIN = 3
+DIODE_PRESS_PIN = 15
+DIODE_MATCH_PIN = 17
 
+press_diode = Diode(DIODE_PRESS_PIN)
+match_diode = Diode(DIODE_MATCH_PIN)
+string_matcher = StringMatcher("CODE", match_diode.turn_on)
 
-string_matcher = StringMatcher("CODE", match)
-
-
-PIN = 3
-morse = Morse(PIN, string_matcher.new_char)
+morse = Morse(READ_PIN, string_matcher.new_char, press_diode.turn_on, press_diode.turn_off)
 while True:
     morse.read_input()
     sleep(0.01)

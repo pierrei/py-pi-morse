@@ -24,8 +24,8 @@ class StringMatcher(object):
 
 
 READ_PIN = 3
-DIODE_PRESS_PIN = 15
-DIODE_MATCH_PIN = 17
+DIODE_PRESS_PIN = 17
+DIODE_MATCH_PIN = 15
 
 press_diode = Diode(DIODE_PRESS_PIN)
 match_diode = Diode(DIODE_MATCH_PIN)

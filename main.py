@@ -46,7 +46,8 @@ def new_char(char):
     string_matcher.new_char(char)
 
 
-morse = Morse(READ_PIN, new_char, press_diode.turn_on, press_diode.turn_off)
+morse = Morse(READ_PIN, cpm=30, auto_speed=True, text_callback=new_char,
+              pressed_callback=press_diode.turn_on, released_callback=press_diode.turn_off)
 
 try:
     print('Started! Listening for input..')

@@ -6,6 +6,7 @@ class Diode(object):
         self.pin = pin
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pin, GPIO.OUT)
+        self.turn_off()
 
     def turn_on(self):
         GPIO.output(self.pin, True)

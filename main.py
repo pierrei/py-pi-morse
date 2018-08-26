@@ -1,3 +1,4 @@
+import sys
 from time import sleep
 
 from RPi import GPIO
@@ -29,13 +30,30 @@ DIODE_MATCH_PIN = 15
 
 press_diode = Diode(DIODE_PRESS_PIN)
 match_diode = Diode(DIODE_MATCH_PIN)
-string_matcher = StringMatcher("CODE", match_diode.turn_on)
 
-morse = Morse(READ_PIN, string_matcher.new_char, press_diode.turn_on, press_diode.turn_off)
+
+def match():
+    print('\nMatch!')
+    match_diode.turn_on()
+
+
+string_matcher = StringMatcher("CODE", match)
+
+
+def new_char(char):
+    sys.stdout.write(char)
+    sys.stdout.flush()
+    string_matcher.new_char(char)
+
+
+morse = Morse(READ_PIN, new_char, press_diode.turn_on, press_diode.turn_off)
 
 try:
+    print('Started! Listening for input..')
     while True:
         morse.read_input()
         sleep(0.01)
+except KeyboardInterrupt:
+    print('\nShutting down..')
 finally:
     GPIO.cleanup()
